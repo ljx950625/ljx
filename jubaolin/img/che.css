@@ -1,0 +1,48 @@
+*{margin:0;padding:0;}
+li{list-style:none;}
+a{text-decoration:none;}
+#a{width:100%;}
+.a{width:100%;}
+#header{width:1200px;height:42px;margin:0 auto;}
+
+#header p{font:14px/42px "";float:left;}
+#header .b{float:right;font:14px/42px "";}
+#header .b i{display:inline-block;background:url(../images/tu1.png) no-repeat center;width:8px;height:6px;margin:0 10px;}
+
+					
+#nav{width:1200px;height:108px;margin:0 auto;box-sizing:border-box;padding:20px 0;position:relative;}
+#nav .xia{position:absolute;top:0;right:275px;display:none;}
+#nav .xia ul{}
+#nav .xia ul li{}
+#nav .logo{float:left;}
+#nav .logo .img{display:inline-block;float:left;}
+#nav .logo .v{display:inline-block;}
+#nav .logo .v h3{font:18px/16px "";padding-bottom: 25px;}
+#nav .logo .v a{font:12px/10px "";}
+#nav .b{float:left;padding:20px 0 0 70px;}
+#nav .b .c{float:left;width:77px;height:39px;background:#f9f9f9;}
+#nav .b .c a{display:block;font:16px/39px "";background:url(../images/tu2.png) no-repeat right;text-align:center;border:1px #eeeeee solid;}
+#nav .b input{float:left;width:331px;height:39px;border:1px #eeeeee solid;}
+#nav .b .d{float:left;}
+#nav .right{float:right;width:191px;height:43px;margin:20px 20px 0 0;}
+#nav .right .a{float:left;display:block;background:url(../images/tui.png) no-repeat center;width:39px;height:43px;}
+#nav .right .x{float:left;display:block;background:url(../images/tui2.png) no-repeat center;width:61px;height:43px;margin:0 15px 0 15px;}
+#nav .right .c{float:left;display:block;background:url(../images/tui3.png) no-repeat center;width:58px;height:43px;}
+#r{width:1200px;height:400px;margin:0 auto;}
+#r img{}
+#r .del{width:40px;background:#ccf;}
+#r h3{line-height: 80px;}
+
+#r thead{width:1200px;height:100px;padding:0 100px 0 100px;}
+#r thead img{display: block;}
+
+.s_box{width:400px;height:300px;left: 50px;top:100px;}
+.s_box img{width:400px;height:300px;}
+/*.s_box span{position: absolute;display: none;background: url(../img/f2.jpg) no-repeat red;background-size: 400px 300px;}*/
+.s_box p{width:400px;height:300px;margin: 0;z-index: 1;left:0;top:0;}	
+.b_box{width:400px;height:300px;position: absolute;left:450px;top:230px;overflow: hidden;display: none;}
+.b_box img{width: 1200px;height: 900px;position: absolute;}
+
+
+#footer{width: 40px;color: #666666;position: relative;}
+#footer a{display:block;font-size: 30px;position: fixed;right: 50px;color: #333333;}

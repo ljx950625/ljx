@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<!--<link rel="stylesheet" href="css/list.css">-->
+		<link rel="stylesheet" href="css/public.css">
+		<style>
+        #haha{width:1200px;overflow: hidden;margin: 0 auto;margin-top:10px;}
+        #haha .box{float: left;width:200px;border: solid 1px #ddd;
+        			box-sizing: border-box;text-align: center;margin:10px 20px;}
+        #haha .box img{width:80%;height:160px;}
+        #haha .box span{font:18px/22px "";color:#666666;margin-top:5px;}
+         #haha .box em{font:12px/18px "";color:#666666;margin-top:5px;}
+         #haha .box p{font:26px/30px "";color:red;margin-top:5px;}
+        #haha .box span,.box em,.box i{display: block;}
+        #haha .box p{margin: 10px 0;line-height:20px;height:20px;overflow: hidden;}
+        #haha .box i.btn{margin:10px auto 0;background:#333333;border-radius:10px;width:100px;height:30px;line-height:30px;color: #fff;}
+    </style>
+	</head>
+	<link rel="stylesheet" type="text/css" href="../shouye/anmo.css
+		"/>
+	<body>
+		<div class="a a7">
+		<div id="header" class="floor">
+			<p>您好，欢迎访问苏州金土地信息科技有限公司《聚宝林》<a href="../land/land.html">登陆</a>|<a href="../register/register.html">注册</a> </p>
+			<div class="b">
+				<a href="">我的服务</a>
+				<i></i>|
+				<a href="">最近浏览</a>
+				<i></i>|
+				<a href="">我是商家</a>
+				<i></i>
+				<a href="">商家入驻</a>
+			</div>
+		</div>
+		</div>
+		<div id="a">
+			<div id="nav">
+				<div class="xia">
+					<ul>
+						<li>在线预约</li>
+						<li>送货上门</li>
+						<li>打的取货</li>
+					</ul>
+					
+				</div>
+				<div class="logo">
+			  		<img src="../images/logo.png">
+					<div class="v">
+						<h3>苏州</h3>
+						<a href="">更换城市</a>
+					</div>
+				</div>
+			<div class="b">
+				<div class="c">
+					<a href="">全部</a>
+					<i></i>
+				</div>
+					<input type="text">
+				<div class="d">
+					<img src="../images/sousuo.png" >
+				</div>
+			</div>
+			<div class="right"> 
+			     <a href="" class="a"></a>
+			   	 <a href="" class="x"></a> 
+			   	 <a href="" class="c"></a>
+			   
+			</div>
+			</div>
+		
+		</div>
+		<div id="a">
+			<div id="daohang">
+				<h1>全部分类</h1>
+				<ul>
+				  	<li><a href="">首页</a></li>
+				  	<li><a href="">上门预约</a></li>
+				  	<li><a href="">一对一</a></li>
+				  	<li><a href="">联系电话</a></li>
+				  	<li><a href="">包你满意</a></li>
+				  	<li><a href="">岗位培训</a></li>
+				</ul>	
+			</div>
+		</div>
+		<div id="cont">
+
+			
+			<div id="haha">
+		        <p>当前商品已卖完，请稍候再来..</p>
+		        <!-- <div class="box">
+		            <img src="images/1.jpg" alt="">
+		            <span>商品1</span>
+		            <p>23.99</p>
+		            <em>好用1</em>
+		            <i><a href="##">加入购物车</a></i>
+		        </div> -->
+	    	</div>
+	    	
+
+				
+			</div>
+	</body>
+	<script src="libs/ajax.js"></script>
+	<script src="libs/cookie.js"></script>	
+	<script>
+     class List{
+     	
+        constructor(){
+            this.cont = document.querySelector("#haha");
+            this.url = "http://localhost/ljx/jubaolin/shopping/data/goods.json";
+
+            this.load();
+            // 1.绑定事件
+            this.addEvent();
+        }
+        addEvent(){
+            var that = this;
+            // 利用事件委托找到按钮
+            this.cont.addEventListener("click",function(eve){
+                if(eve.target.className == "btn"){
+                    // 存cookie，存什么？2.唯一的信息，商品的货号
+                    that.id = eve.target.parentNode.getAttribute("qwe");
+                    // 3.存cookie了
+                    that.setCookie();
+                }
+            })
+        }
+        setCookie(){
+            // console.log(this.id)
+            // S1.规划数据的格式
+            // 同一个商品点击多次
+            // {id:this.id,num:4}
+            // 不同的商品点击多次
+            // 只有一条cookie，保存了所有商品
+            // [{id:this.id,num:2},{id:this.id,num:4},....]
+            // S2.第一次存和之后存,只有一条cookie
+            // 先读取
+            this.goods = getCookie("goods") ? JSON.parse(getCookie("goods")) : [];
+            if(this.goods.length == 0){
+                // 第一次:直接写数组,数组中放一个对象
+                this.goods.push({
+                    id:this.id,
+                    num:1
+                })
+            }else{
+                // 之后存:新商品和老商品
+                // 先遍历,比较
+                var i = 0;
+                var onoff = this.goods.some((val,index)=>{
+                    i = index;
+                    return val.id == this.id;
+                })
+                if(onoff){
+                    // 老商品:
+                    // 修改对应对象的num属性
+                    this.goods[i].num++
+                }else{
+                    // 新商品:
+                    // 增加对象
+                    this.goods.push({
+                        id:this.id,
+                        num:1
+                    })
+                }
+            }
+            // 再设置
+            setCookie("goods",JSON.stringify(this.goods));
+        }
+        load(){
+            var that = this;
+            ajaxGet(this.url,function(res){
+                that.res = JSON.parse(res);
+                that.display();
+            })
+        }
+        display(){
+            // console.log(this.res);
+            var str = "";
+            this.res.forEach((val)=>{
+                str += `<div class="box" qwe="${val.goodsId}">
+                            <img src="${val.url}" alt="">
+                            <span>${val.name}</span>
+                            <p>${val.price}</p>
+                            <em>${val.tip}</em>
+                            <i class="btn">加入购物车</i>
+                        </div>`
+            })
+            this.cont.innerHTML = str;
+        }
+    }
+
+    new List;
+</script>
+</html>

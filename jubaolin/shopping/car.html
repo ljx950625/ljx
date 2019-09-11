@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Document</title>
+		<!--<link rel="stylesheet" href="css/car.css">-->
+		<link rel="stylesheet" href="css/public.css">
+		<link rel="stylesheet" type="text/css" href="anmo.css"/>
+	<style>
+		
+    </style>
+    
+	</head>
+	<body>
+			<div class="a a7">
+		<div id="header" class="floor">
+			<p>您好，欢迎访问苏州金土地信息科技有限公司《聚宝林》<a href="../land/land.html">登陆</a>|<a href="../register/register.html">注册</a> </p>
+			<div class="b">
+				<a href="">我的服务</a>
+				<i></i>|
+				<a href="">最近浏览</a>
+				<i></i>|
+				<a href="">我是商家</a>
+				<i></i>
+				<a href="">商家入驻</a>
+			</div>
+		</div>
+		
+		
+			
+		<div id="cont">
+	
+				
+			
+			<div id="main">
+				<!--<h2>这是购物车页面<small><a href="list.html">继续购物</a></small></h2>-->
+			    <table border="1" cellspacing="0" width="1200" align="center">
+			        <thead>
+			            <tr>
+			                <th>图片</th>
+			                <th>名字</th>
+			                <th>价格</th>
+			                <th>数量</th>
+			                <th>操作</th>
+			            </tr>
+			        </thead>
+			        <tbody>
+			            <tr>
+			                <td colspan="5">购物车为空</td>
+			            </tr>
+			            <!-- <tr>
+			                <td><img src=""></td>
+			                <td>名字</td>
+			                <td>价格</td>
+			                <td><input type="number" value="10"></td>
+			                <td>删除</td>
+			            </tr> -->
+			        </tbody>
+			    </table>
+			</div> 
+			
+			
+		
+				
+			
+		</div>	
+	</body>
+	<script src="libs/ajax.js"></script>
+	<script src="libs/cookie.js"></script>
+<script>
+    class Car{
+        constructor(){
+            this.tbody = document.querySelector("tbody");
+            this.url = "http://localhost/ljx/jubaolin/shopping/data/goods.json";
+            this.load();
+            this.addEvent()
+        }
+        addEvent(){
+            var that = this;
+            this.tbody.addEventListener("click",function(eve){
+                if(eve.target.className == "del"){
+                    that.id = eve.target.parentNode.getAttribute("index");
+                    eve.target.parentNode.remove();
+                    that.changeCookie(function(i){
+                        that.goods.splice(i,1)
+                    });
+                }
+            })
+            this.tbody.addEventListener("input",function(eve){
+                if(eve.target.className == "num"){
+                    that.id = eve.target.parentNode.parentNode.getAttribute("index");
+                    that.changeCookie(function(i){
+                        that.goods[i].num = eve.target.value;
+                    });
+                }
+            })
+        }
+        changeCookie(callback){
+            var i = 0;
+            this.goods.some((val,index)=>{
+                i = index;
+                return val.id == this.id;
+            })
+            callback(i);
+            setCookie("goods",JSON.stringify(this.goods));
+        }
+        load(){
+            var that = this;
+            ajaxGet(this.url,function(res){
+                that.res = JSON.parse(res);
+                that.getCookie()
+            })
+        }
+        getCookie(){
+            this.goods = getCookie("goods") ? JSON.parse(getCookie("goods")) : [];
+            console.log("this.goods")
+            console.log(this.goods)
+			console.log(this.goods)
+            this.display();
+        }
+        display(){
+            var str = "";
+            this.res.forEach((resVal)=>{
+                this.goods.forEach((goodsVal)=>{
+                    if(resVal.goodsId == goodsVal.id){
+                        str += `<tr index="${resVal.goodsId}">
+                                    <td><img src="${resVal.url}"></td>
+                                    <td>${resVal.name}</td>
+                                    <td>${resVal.price}</td>
+                                    <td><input class="num" type="number" value="${goodsVal.num}" min=1></td>
+                                    <td class="del">删除</td>
+                                </tr>`;
+                    }
+                })
+            })
+            this.tbody.innerHTML = str;
+        }
+    }
+    new Car;
+</script>
+<script src="anmo.js" type="text/javascript" charset="utf-8"></script>
+</html>
